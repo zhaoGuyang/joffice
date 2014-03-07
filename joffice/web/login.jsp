@@ -112,7 +112,7 @@ $(function(){
 	<tr>
 	<tr>
 		<td colspan="2" align="center" valign="middle" >
-			<button id="submitBtn" class="k-button"><spring:message code="login.login"/></button>
+			<a id="submitBtn" ><spring:message code="login.login"/></a>
 			<input id="resetBtn" type="reset" class="k-button">
 		</td>
 	</tr>

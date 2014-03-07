@@ -1,5 +1,7 @@
 package com.ocsoft.oa.vo.system;
 
+import java.util.List;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -15,18 +17,20 @@ public class Position extends BaseVO
 	public static final String IS_PARENT_Y = "true";
 	public static final int IS_LEAF_N = 0;
 	public static final int IS_LEAF_Y = 1;
-	protected Long posId;
-	protected String posName;
-	protected String posDesc;
-	protected Long parentId;
-	protected String nodePath;
-	protected Integer depth;
-	protected Short sn;
-	protected Short isPrimary;
-	protected String open = "true";
-	protected String isParent;
-	protected Integer isLeaf;
-	protected String posgroup;
+	private Long posId;
+	private String posName;
+	private String posDesc;
+	private Long parentId;
+	private String nodePath;
+	private Integer depth;
+	private Short sn;
+	private Short isPrimary;
+	private String open = "true";
+	private String isParent;
+	private Integer isLeaf;
+	private String posgroup;
+	private List<Position> children;
+	
 
 	public Integer getIsLeaf()
 	{
@@ -202,5 +206,15 @@ public class Position extends BaseVO
 	public void setPosgroup(String posgroup)
 	{
 		this.posgroup = posgroup;
+	}
+
+	public List<Position> getChildren()
+	{
+		return children;
+	}
+
+	public void setChildren(List<Position> children)
+	{
+		this.children = children;
 	}
 }

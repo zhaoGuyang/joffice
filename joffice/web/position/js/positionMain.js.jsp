@@ -49,6 +49,22 @@ $(function(){
 		};
 	
 	positionTree = $.fn.zTree.init($("#positionTree"), setting);
+	
+	$("#toggleBtns").children()
+	.first()
+	.button({
+		text:false,
+		icons:{primary:"ui-icon-plus"}
+	})
+	.click(function(){positionTree.expandAll(true);})
+	.next()
+	.button({
+		text:false,
+		icons:{primary:"ui-icon-minus"}
+	})
+	.click(function(){positionTree.expandAll(false);})
+	.parent()
+	.buttonset();
  });
 
 function zTreeOnRightClick(e, treeId, treeNode) {

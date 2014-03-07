@@ -50,11 +50,21 @@
 		
 		
 		<div class="pane ui-layout-west">
-			<div class='ui-widget ui-widget-header'>岗位管理</div>
+			<table cellspacing="0" cellpadding="0" border="0" width="100%" class='ui-widget ui-widget-header ui-corner-tl ui-corner-tr'>
+					<tr>
+						<td align="left"><span>岗位管理</span></td>
+						<td align="right">
+							<div id="toggleBtns">
+								<a id="expendBtn">展开</a>
+								<a id="collapseBtn" >收起</a>
+							</div>
+						</td>
+					</tr>
+			</table>
 			<div id="positionTree" class="ztree" style=" clear: left;"></div>
 		</div>
 		<div class="pane ui-layout-center">
-			<div id="posDetailPanel" class='ui-widget ui-widget-header'>岗位管理2</div>
+			<div id="posDetailPanel" ></div>
 		</div>
 	</div>
 	

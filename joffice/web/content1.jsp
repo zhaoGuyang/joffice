@@ -19,13 +19,7 @@
 <link type="text/css" rel="stylesheet" href="${base_context}/plugin/zTree/css/zTreeStyle/zTreeStyle.css" />
 <script src="${base_context}/plugin/zTree/js/jquery.ztree.core-3.5.min.js"></script>
 <style type="text/css">
-.ztree * {
-padding:2px 0px 2px 0px; 
-margin:0; 
-font-size:12px; 
-font-family: Verdana, Arial, Helvetica, AppleGothic, sans-serif;
-font-weight: bold;
-}
+
 
 .toggleTreeBtn
 {
@@ -39,7 +33,11 @@ font-weight: bold;
 base_context="${base_context}";
 var navTree;
 $(function(){
-	$('#contentPanel').layout();
+	$('#contentPanel').layout({
+		spacing_open:2,
+		spacing_closed:10,
+		 togglerContent_closed:"<div>></div>"
+	});
 	//pageInit();
 	var setting = {
 			data: {
