@@ -37,15 +37,16 @@ public class PositionController
 		List res = new ArrayList();
 		Long posId = NumberUtil.toLong(request.getParameter("posId"), 0L);
 		Long parentId = NumberUtil.toLong(request.getParameter("parentId"), 0L);
-		if(posId == 0L && parentId == 0L)
-		{
+		//if(posId == 0L && parentId == 0L)
+		//{
 			Position parent =  positionService.getParentPositionByParentId(parentId);
+			parent.setChildren(positionService.getChildByParentId(posId,true));
 			res.add(parent);
-		}
-		else
-		{
-			res = positionService.getChildByParentId(posId);
-		}
+		//}
+		//else
+	//	{
+	//		res = positionService.getChildByParentId(posId);
+	//	}
 		
 		return res;
 	}
@@ -85,6 +86,7 @@ public class PositionController
 	}
 	
 	@RequestMapping("/position/save")
+	@ResponseBody
 	public Map savePos(HttpServletRequest request, HttpServletResponse response, Position vo)
 	{
 		Map rtn = new HashMap();
@@ -106,6 +108,7 @@ public class PositionController
 		po.setUser("test");
 		positionService.save(po);
 		rtn.put("status", 1);
+		rtn.put("posDetail", po);
 		return rtn;
 	}
 	

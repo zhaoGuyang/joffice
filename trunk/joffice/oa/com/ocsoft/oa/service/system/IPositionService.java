@@ -10,4 +10,5 @@ public interface IPositionService extends IBaseService<Position, Long>
 	public List<Position> getChildByParentId(long parentId);
 	public Integer getChildCountByParentId(long parentId);
 	public Position getParentPositionByParentId(long parentId);
+	public List<Position> getChildByParentId(long parentId, boolean includeChidlren);
 }

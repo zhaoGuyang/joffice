@@ -23,6 +23,37 @@ public class PositionServiceImpl extends BaseServiceImpl<Position, Long>
 	{
 		return positionDAO.getChildByParentId(parentId);
 	}
+	
+	public List<Position> getChildByParentId(long parentId, boolean includeChidlren)
+	{
+		List<Position> chidlren = this.getChildByParentId(parentId);
+		if(includeChidlren)
+		{
+			for(Position p : chidlren)
+			{
+				this.setChildren(p);
+			}
+		}
+		return chidlren;
+	}
+	
+	private void setChildren(Position position)
+	{
+		List<Position> children = this.getChildByParentId(position.getPosId());
+		if(children!=null && children.size()>0)
+		{
+			position.setChildren(children);
+			position.setIsParent("true");
+			for(Position p : children)
+			{
+				this.setChildren(p);
+			}
+		}
+		else
+		{
+			position.setIsParent("false");
+		}
+	}
 
 	@Override
 	public Integer getChildCountByParentId(long parentId)
