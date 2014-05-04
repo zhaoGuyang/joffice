@@ -270,9 +270,27 @@ select
   		 padding: 1px;
 }
 
+.ui-dialog .ui-dialog-titlebar { padding: .4em 1em; position: relative; height:20px; }
+
 
 @media print {
 html {
 		height:		auto !important;
 	}
+}
+
+
+
+
+.table-top {
+    height: 14px;
+    margin-top: 15px;
+}
+.table-top .table-top-left {
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+}
+.table-top .table-top-right {
+    float: right;
 }

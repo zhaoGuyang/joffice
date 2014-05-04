@@ -38,7 +38,7 @@
 		<a href="#" id="assignBtn" onclick="showAssign()" icon="ui-icon-person">用户</a>
 		<a href="#" id="assignBtn" onclick="showAuth()" icon="ui-icon-key">权限</a>
 	</div>
-	<table id="roleGrid" cellspacing="0" cellpadding="0" border="0" width="100%">
+	<table id="roleGrid" cellspacing="0" cellpadding="0" border="0" width="99%">
 	</table>
 	<div id="pager"></div>  
 	

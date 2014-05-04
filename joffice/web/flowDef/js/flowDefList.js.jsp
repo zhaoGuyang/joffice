@@ -4,6 +4,7 @@
 base_context="${base_context}";
 var win;
 var defMgtMenu;
+var selectData;
 $(function(){
 	var selectId = 0;
 	
@@ -24,11 +25,11 @@ $(function(){
 		width : 300,
 		height: 200,
 		pisition: { my: "center", at: "center", of: window },
-		model:true,
+		modal:true,
 		resizable:true,
 		title:"流程定义",
 		close : function(){
-			$("#formDefList").trigger("reloadGrid");
+			//$("#formDefList").trigger("reloadGrid");
 		}
 		
 	});
@@ -124,6 +125,7 @@ $(function(){
 function selectRow(id)
 {
 	var data = $("#formDefList").jqGrid('getRowData',id);
+	selectData = data;
 	selectId = data.flowDefId;
 }
 
@@ -140,6 +142,8 @@ function importFlow()
 	top
 	.$("#pubDialog")
 	.dialog( "open" )
+	.dialog("option","width","350")
+	.dialog("option","height","150")
 	.dialog("option","position",{ my: "center", at: "center", of: window })
 	.load("${base_context}/flowDef/showUpload.oa?flowDefId=0");
 }
@@ -148,9 +152,45 @@ function showProcess(_type)
 	var data = $("#formDefList").jqGrid('getRowData',selectId);
 	var processId = data.processDefId;
 	
-	//top.$("#pubDialog").dialog( "open" ).load("${base_context}/flow/showProcess.oa?resourceType="+_type+"&processId="+processId);
+	top.$("#pubDialog").html("");
+	if(_type == 'xml')
+	{
+		
+		top.$("#pubDialog").load("${base_context}/flowDef/showProcess.oa?resourceType=xml&processId="+processId,function(data){
+			$(this).text(data);
+		} );
+	}
+	else if (_type == 'image')
+	{
+		$('<div/>', {
+            'id': 'imgDialog',
+            html: "<img src='${base_context}/flowDef/showProcess.oa?resourceType=image&processId="+processId + "' />"
+        }).appendTo(top.$("#pubDialog"));
+	}
 	
-	window.open("${base_context}/flowDef/showProcess.oa?resourceType="+_type+"&processId="+processId);
+	top.$("#pubDialog")
+    .dialog( "open" )
+	.dialog("option","position",{ my: "center", at: "center", of: window })
+	.dialog("option","width","800")
+	.dialog("option","height","500");
+}
+function showSetup()
+{
+	if(selectData && selectData.processDefId)
+	{
+		/*
+		top.
+		$("#pubDialog")
+		.dialog( "open" )
+		.dialog("option","position",{ my: "center", at: "center", of: window })
+		.dialog("option","width","800")
+		.dialog("option","height","600")
+		.dialog("option","title","设置流程")
+		.load("${base_context}/flowDef/showSetup.oa?processId="+selectData.processDefId);
+		*/
+		var _url = "${base_context}/flowDef/showSetup.oa?processId="+selectData.processDefId;
+		top.addTab(_url,"设置流程");
+	}
 }
 
 </script>

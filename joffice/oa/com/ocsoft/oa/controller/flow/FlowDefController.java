@@ -3,6 +3,7 @@ package com.ocsoft.oa.controller.flow;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.impl.task.TaskDefinition;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,13 +29,17 @@ import com.ocsoft.oa.service.flow.IFlowDefinitionService;
 import com.ocsoft.oa.vo.flow.FlowDefinition;
 import com.ocsoft.oa.web.AjaxRtn;
 
+
+
 @Controller
 
 public class FlowDefController 
 {
 	@Resource(name="flowDefService")
 	private IFlowDefinitionService flowDefService;
+	
 	private RepositoryService repositoryService;
+	private TaskService taskService;
 	
 	@RequestMapping("/flowDef/show")
 	public String showFlowDefList()
@@ -164,6 +171,25 @@ public class FlowDefController
 		
 	}
 	
+	@RequestMapping("/flowDef/showSetup")
+	public ModelAndView showSetup(@RequestParam String processId)
+	{
+		ModelAndView mv = new ModelAndView("flowSetup");
+		
+		mv.addObject("processId", processId);
+		return mv;
+	}
+	@RequestMapping("/flowDef/usrSetup")
+	public ModelAndView userSetup(@RequestParam String processId)
+	{
+		ModelAndView mv = new ModelAndView("usrSetup");
+		
+		Collection<TaskDefinition> taskDefs = flowDefService.getTaskDef(processId);
+		mv.addObject("taskDefs", taskDefs);
+		return mv;
+	}
+	
+	
 	public RepositoryService getRepositoryService()
 	{
 		return repositoryService;
@@ -171,5 +197,13 @@ public class FlowDefController
 	public void setRepositoryService(RepositoryService repositoryService)
 	{
 		this.repositoryService = repositoryService;
+	}
+	public TaskService getTaskService()
+	{
+		return taskService;
+	}
+	public void setTaskService(TaskService taskService)
+	{
+		this.taskService = taskService;
 	}
 }

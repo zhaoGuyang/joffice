@@ -67,8 +67,9 @@ public class ModuleController
 	{
 		List res = new ArrayList();
 		String user = request.getSession().getAttribute(Constants.SESS_USER_KEY)+"";
-		Long moduleId = NumberUtil.toLong(request.getParameter("moduleId"), 0L);
-		res = moduleService.getAdminMenu(moduleId,user);
+		Long moduleId = NumberUtil.toLong(request.getParameter("moduleId"), null);
+		if(moduleId != null)
+			res = moduleService.getAdminMenu(moduleId,user);
 		return res;
 	}
 	

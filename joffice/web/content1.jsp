@@ -27,11 +27,17 @@
 	height:20px;
 	
 }
+#mainTabs { margin-top: 1em; }
+#mainTabs li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
+
+.ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 0; background: none; }
 </style>
 <script type="text/javascript">
 
 base_context="${base_context}";
 var navTree;
+var mainTabs;
+var tabCounter = 2;
 $(function(){
 	$('#contentPanel').layout({
 		spacing_open:2,
@@ -90,7 +96,7 @@ $(function(){
 	.addClass("toggleTreeBtn")
 	.click(function(){collapseTree();});
 	
-	
+	mainTabs = $( "#mainTabs" ).tabs();
 });
 
 function zTreeOnLeftClick(event, treeId, treeNode)
@@ -98,7 +104,8 @@ function zTreeOnLeftClick(event, treeId, treeNode)
 	var _url = treeNode.defaultUrl;
 	if(_url.length>0)
 	{
-		$("#rightFrame").attr('src',_url);
+		//$("#rightFrame").attr('src',_url);
+		addTab(_url,treeNode.moduleName);
 	}
 };
 
@@ -121,6 +128,20 @@ function collapseTree()
 {
 	navTree.expandAll(false);
 }
+
+function addTab(_url,_label)
+{
+	var tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>";
+	var id = "tabs-" + tabCounter;
+	var li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, _label ) );
+	var tabContent= "<iframe id='iframe" + tabCounter + "' name='iframe" + tabCounter + "' scrolling='auto' frameborder='0'  style='width:100%;height:100%;'></iframe>";
+	mainTabs.find( ".ui-tabs-nav" ).append( li );
+	mainTabs.append( "<div id='" + id + "'><p>" + tabContent + "</p></div>" );
+	mainTabs.tabs( "refresh" );
+	$('#iframe' + tabCounter).attr('src', _url);
+	mainTabs.tabs( "option", "active", -1 );
+	tabCounter++;
+}
 </script>
 </head>
 <body class="bodystyle">
@@ -139,7 +160,17 @@ function collapseTree()
 		</div>
  	</div>
 	<div id="rPanel" class="pane ui-layout-center">
+	<!-- 
 		<iframe id="rightFrame" name="rightFrame" src="" width="100%" height="99%" marginwidth="0" marginheight="0" frameborder="0" scrolling="yes" ></iframe>
+	 -->
+		 <div id="mainTabs">
+			<ul>
+				<li><a href="#tabs-1">Nunc tincidunt</a> <span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li>
+			</ul>
+			<div id="tabs-1">
+				<p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
+			</div>
+		</div>
 	</div>
 
 </div>

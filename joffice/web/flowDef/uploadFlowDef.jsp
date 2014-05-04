@@ -25,7 +25,7 @@
 	<table>  
 		<tr>  
 			<td>Upload File: </td>  
-			<td><input type="file" name="file" /></td>  
+			<td><input type="file" name="file" size="40"/></td>  
 		</tr>
 		<tr>
 			<td colspan="2" align="center" valign="middle" id="formBtns">

@@ -19,11 +19,12 @@
 <body class="bodystyle">
 <div id="window"></div>	
 	<div id="toolbar" class="ui-widget-header">
-		<a href="#" id="delBtn" icon="ui-icon-trash">删除</a>
 		<a href="#" id="impBtn" onclick="importFlow()" icon="ui-icon-arrowthick-1-n">导入</a>
-		<a href="#" id="startFlow" onclick="showProcess('image')" icon="ui-icon-play">启动</a>
-		<a href="#" id="viexXml" onclick="showProcess('xml')" icon="ui-icon-document">XML</a>
-		<a href="#" id="viexImage" onclick="showProcess('image')" icon="ui-icon-image">Image</a>
+		<a href="#" id="startFlowBtn" onclick="showProcess('image')" icon="ui-icon-play">启动</a>
+		<a href="#" id="viexXmlBtn" onclick="showProcess('xml')" icon="ui-icon-document">XML</a>
+		<a href="#" id="viexImageBtn" onclick="showProcess('image')" icon="ui-icon-image">Image</a>
+		<a href="#" id="setupBtn" onclick="showSetup()" icon="ui-icon-gear">设置</a>
+		<a href="#" id="delBtn" icon="ui-icon-trash">删除</a>
 	</div>
  	<table id="formDefList" cellspacing="0" cellpadding="0" border="0" width="100%">
  	</table>
@@ -49,6 +50,18 @@
 	 		<a href="#" id="viexImage" onclick="showProcess('image')">
 	 			<span class="ui-icon ui-icon-image">
 	 			</span><span>Image</span>
+	 		</a>
+	 	</li>
+	 	<li>
+	 		<a href="#" id="setup" onclick="showSetup()">
+	 			<span class="ui-icon ui-icon-gear">
+	 			</span><span>设置</span>
+	 		</a>
+	 	</li>
+	 	<li>
+	 		<a href="#" id="del" onclick="showSetup()">
+	 			<span class="ui-icon ui-icon-trash">
+	 			</span><span>删除</span>
 	 		</a>
 	 	</li>
 	 </ul>

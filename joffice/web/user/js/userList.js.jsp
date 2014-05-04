@@ -66,7 +66,7 @@ $(function(){
         	var ids = $("#userGrid").jqGrid('getDataIDs');
         	for(var i=0;i < ids.length;i++)
         	{
-        		$("#userGrid").setRowData( ids[i],false,{height: 30+i*2});
+        		$("#userGrid").setRowData( ids[i],false,{height: 30});
         	}
         	
         }

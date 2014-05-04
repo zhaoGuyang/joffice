@@ -4,6 +4,7 @@
 base_context="${base_context}";
 var posMgtMenu;
 var positionTree;
+var setting;
 var selectNode;
 $(function(){
 	$('#positionPanel').layout({
@@ -19,7 +20,7 @@ $(function(){
 		posMgtMenu.hide();
 	});
 	
-	var setting = {
+	setting = {
 			data: {
 				key : {
 					name: "posName",
@@ -36,19 +37,14 @@ $(function(){
 				showIcon: false,
 				selectedMulti: false
 			},
-			async: {
-				enable: true,
-				url:"${base_context}/position/getTreeData.oa",
-				autoParam:["posId","parentId"],
-				dataFilter: filter
-			},
+			
 			callback: {
 				onClick: zTreeOnLeftClick,
 				onRightClick: zTreeOnRightClick
 			}
 		};
+	loadPosTree();
 	
-	positionTree = $.fn.zTree.init($("#positionTree"), setting);
 	
 	$("#toggleBtns").children()
 	.first()
@@ -99,6 +95,15 @@ function editPos()
 {
 	var url = "${base_context}/position/edit.oa?posId="+selectNode.posId
 	$("#posDetailPanel").load(url);
+}
+
+function loadPosTree()
+{
+	$.getJSON("${base_context}/position/getTreeData.oa?datatime="+new Date(),
+			function (data){
+				positionTree = $.fn.zTree.init($("#positionTree"), setting,data);
+			}
+		);
 }
 
 </script>
