@@ -36,7 +36,7 @@ public class IndexController
 		//List<Module> modules = moduleService.getAdminMenu(Long.valueOf(0));
 		List<Module> modules = moduleService.getByParentId(Long.valueOf(0));
 		mv.addObject("modules", modules);
-		mv.setViewName("index");
+		mv.setViewName("index1");
 		return mv;
 	}
 	@RequestMapping("/content")

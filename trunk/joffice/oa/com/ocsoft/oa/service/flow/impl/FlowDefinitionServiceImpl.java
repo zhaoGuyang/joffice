@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import javax.annotation.Resource;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.activiti.engine.impl.task.TaskDefinition;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
@@ -123,30 +125,7 @@ public class FlowDefinitionServiceImpl extends
 			if (processDefinition != null) 
 			{
 				
-				String key = processDefinition.getKey();
-				FlowDefinition po; 
-				FlowDefinition flowDef = getByKey(key);
-				if (flowDef == null) 
-				{
-					po = new FlowDefinition();
-				}
-				else
-				{
-					po = flowDef;
-				}
-
-				po.setDeployId(processDefinition.getDeploymentId());
-				po.setDefKey(processDefinition.getKey());
-				po.setDefDesc(processDefinition.getDescription());
-				po.setSubject(processDefinition.getName());
-				po.setVersionNo(processDefinition.getVersion());
-				po.setStatus(processDefinition.isSuspended() ? new Long(0) : new Long(1));
-				po.setDefTypeId(new Long(0));
-				po.setDefXml(mFile.getBytes().toString());
-				po.setProcessDefId(processDefinition.getId());
-				po.setUser(user);
-				this.saveOrUpdate(po);
-				flowDefDAO.flush();
+				
 			}
 		}
 		catch (FileNotFoundException e) {
@@ -159,6 +138,28 @@ public class FlowDefinitionServiceImpl extends
 		}
 
 	}
+	
+	public Collection<TaskDefinition> getTaskDef(String processDefId)
+	{
+		
+		ProcessDefinitionEntity processDefinition = getProcessDefinitionEntity(processDefId);
+		return processDefinition.getTaskDefinitions().values();
+	}
+	
+	public List getActivityList(String processDefId)
+	{
+		
+		ProcessDefinitionEntity processDefinition = getProcessDefinitionEntity(processDefId);
+		return processDefinition.getActivities();
+	}
+	
+	private ProcessDefinitionEntity getProcessDefinitionEntity(String processDefId)
+	{
+		ProcessDefinition definition = repositoryService.createProcessDefinitionQuery().processDefinitionId(processDefId).singleResult();
+		return (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService).getDeployedProcessDefinition(definition.getId());
+		
+	}
+	
 	@Override
 	public FlowDefinition getByKey(String key)
 	{
@@ -171,6 +172,34 @@ public class FlowDefinitionServiceImpl extends
 		ProcessDefinitionEntity ent = (ProcessDefinitionEntity) ((RepositoryServiceImpl) this.repositoryService)
 				.getDeployedProcessDefinition(defId);
 		return ent;
+	}
+	
+	private void createFlowDefinition(ProcessDefinition processDefinition, MultipartFile mFile, String user) throws IOException
+	{
+		String key = processDefinition.getKey();
+		FlowDefinition po; 
+		FlowDefinition flowDef = getByKey(key);
+		if (flowDef == null) 
+		{
+			po = new FlowDefinition();
+		}
+		else
+		{
+			po = flowDef;
+		}
+
+		po.setDeployId(processDefinition.getDeploymentId());
+		po.setDefKey(processDefinition.getKey());
+		po.setDefDesc(processDefinition.getDescription());
+		po.setSubject(processDefinition.getName());
+		po.setVersionNo(processDefinition.getVersion());
+		po.setStatus(processDefinition.isSuspended() ? new Long(0) : new Long(1));
+		po.setDefTypeId(new Long(0));
+		po.setDefXml(mFile.getBytes().toString());
+		po.setProcessDefId(processDefinition.getId());
+		po.setUser(user);
+		this.saveOrUpdate(po);
+		flowDefDAO.flush();
 	}
 
 }

@@ -30,55 +30,49 @@ $(function(){
 		resizable:false,
 		title:"<spring:message code="login.userLogin"/>"
 	});
-	/*
-	$("#loginWin").kendoWindow({
-		  actions		: [ ],
-		  animation		: false,
-		  title			: '<spring:message code="login.userLogin"/>',
-		  width			: 300,
-		  height		: 140,
-		  resizable		: false,
-		  draggable		: false
-
-		});
-	*/
-	//var loginWin = $("#loginWin").data("kendoWindow");
-	//loginWin.center();
 	
-	//$("#msgTable").hide();
 	
 	$("#submitBtn").click(function(event){
-		 var uName = $("#userName").val();
-		 var pwd = $("#password").val();
-		 if(isNull(uName) || isNull(pwd) )
-		 {
-		  	showErrorMsg("<spring:message code='login.msg.accountInvalid'/>");
-		 }
-		 else
-		 {
-			 var url="${base_context}/login.oa";
-			 var params = {userName:uName, password:pwd};
-		 	$.post(
-		 		url,	
-		 		params,
-		 		function(data){
-		 			if(data && 1==data.status)
-	 				{
-		 				window.location.href="${base_context}/index.oa"
-	 				}
-		 		},
-		 		"json"
-		 	);
-		 }
-		  event.preventDefault();
+		login(event);
 	})
 	.button()
 	.next()
-	.button()
-	;
+	.button();
+	
+	$('#loginForm').find('input').keydown(function(event){
+		if(event.keyCode==13){
+			login(event)
+		}
+	}); 
 
 });
 
+function login(event)
+{
+	 var uName = $("#userName").val();
+	 var pwd = $("#password").val();
+	 if(isNull(uName) || isNull(pwd) )
+	 {
+	  	showErrorMsg("<spring:message code='login.msg.accountInvalid'/>");
+	 }
+	 else
+	 {
+		 var url="${base_context}/login.oa";
+		 var params = {userName:uName, password:pwd};
+	 	$.post(
+	 		url,	
+	 		params,
+	 		function(data){
+	 			if(data && 1==data.status)
+ 				{
+	 				window.location.href="${base_context}/index.oa"
+ 				}
+	 		},
+	 		"json"
+	 	);
+	 }
+	  event.preventDefault();
+}
 
 </script>
 </head>
@@ -90,7 +84,7 @@ $(function(){
 	</tr>
 </table>
 <div id="loginWin">
-<form method="post" action="#">
+<form id="loginForm" method="post" action="#">
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
 	<tr>
 		<td colspan="2">&nbsp;</td>
@@ -112,8 +106,8 @@ $(function(){
 	<tr>
 	<tr>
 		<td colspan="2" align="center" valign="middle" >
-			<a id="submitBtn" ><spring:message code="login.login"/></a>
-			<input id="resetBtn" type="reset" class="k-button">
+			<a id="submitBtn" onclick="document.getElementById('loginForm').reset();"><spring:message code="login.login"/></a>
+			<a id="resetBtn" >重置</a>
 		</td>
 	</tr>
 </table>

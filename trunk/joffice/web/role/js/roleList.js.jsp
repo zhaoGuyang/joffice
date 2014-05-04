@@ -41,7 +41,7 @@ $(function(){
                     ],  
         pager : "#pager",  
         //autoWidth : true,  
-        width:$(window).width(),
+        width:$(window).width()-15,
         rowNum : 10,  
         rowList:[10,20,30],
         rownumbers : true,  
@@ -64,7 +64,7 @@ $(function(){
         	var ids = $("#roleGrid").jqGrid('getDataIDs');
         	for(var i=0;i < ids.length;i++)
         	{
-        		$("#roleGrid").setRowData( ids[i],false,{height: 30+i*2});
+        		$("#roleGrid").setRowData( ids[i],false,{height: 30});
         	}
         	
         }

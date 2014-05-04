@@ -24,12 +24,15 @@ $(function(){
 
 function afterSave()
 {
+	/*
 	var node = null;
 	var sNodes = positionTree.getSelectedNodes();
 	if (sNodes.length > 0) {
 		node = sNodes[0].getParentNode();
 	}
 	positionTree.reAsyncChildNodes(node, "refresh");
+	*/
+	loadPosTree();
 }
 
 </script>
